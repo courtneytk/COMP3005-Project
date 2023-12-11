@@ -1,0 +1,46 @@
+# Insert a new member
+INSERT INTO Member (FirstName, LastName, Email, Age, Address, Phone)
+VALUES ('John', 'Doe', 'john@example.com', 25, '123 Main St', '555-1234');
+
+# Update a member's info
+UPDATE Member
+SET Address = '456 Oak St', Phone = '555-5678'
+WHERE MemberID = 1; -- Assuming MemberID 1 corresponds to John Doe
+
+# Create a health goal
+INSERT INTO HealthGoal (GoalID, MemberID, TargetDate, Description, CompletionDate)
+VALUES (10,1, '2023-01-05', 'Lose Weight', '2023-02-05');
+
+# Listing members into a class
+SELECT M.*
+FROM Member M
+JOIN MembersClasses MC ON M.MemberID = MC.MemberID
+WHERE MC.ClassID = 1;
+
+# Inserting a new trainer
+INSERT INTO Trainer (TrainerID, FirstName, Certification)
+VALUES ('1', 'Jane Train', 'ACE Certified');
+
+# Recording a new payment
+INSERT INTO Payments (MemberID, Amount, Date, PaymentMethod)
+VALUES (1, 50.00, '2023-02-20', 'Credit Card');
+
+# Booking a Room
+INSERT INTO RoomBookings (AdminID, RoomName, BookingDate, StartTime, EndTime)
+VALUES (1, 'Studio A', '2023-02-15', '14:00', '16:00');
+
+# Listing trainers in group class
+SELECT T.*
+FROM Trainer T
+JOIN GroupClasses GC ON T.TrainerID = GC.TrainerID
+WHERE GC.ClassID = 2;
+
+# Schedule a class
+INSERT INTO PersonalTraining (MemberID, TrainerID, Date, Time)
+VALUES (1, 1, '2023-02-01', '10:00');
+
+# Update trainer info
+UPDATE Trainer
+SET LastName = 'Doe'
+WHERE TrainerID = 1; -- Assuming TrainerID 1 corresponds to Jane Trainer
+
