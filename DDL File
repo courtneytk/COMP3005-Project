@@ -1,0 +1,91 @@
+-- Create Member table
+CREATE TABLE Member (
+    MemberID SERIAL PRIMARY KEY,
+    FirstName VARCHAR(255),
+	LastName VARCHAR(255),
+    Email VARCHAR(255),
+    Age INTEGER,
+    Address VARCHAR(255),
+    Phone VARCHAR(15)
+);
+
+-- Create HealthMetrics table
+CREATE TABLE HealthGoal (
+    GoalID SERIAL PRIMARY KEY,
+    MemberID INTEGER REFERENCES Member(MemberID),
+    TargetDate DATE,
+    Description VARCHAR(255),
+    CompletionDate DATE
+);
+
+-- Create Trainer table
+CREATE TABLE Trainer (
+    TrainerID SERIAL PRIMARY KEY,
+    FirstName VARCHAR(255),
+    Certification VARCHAR(255)
+);
+
+-- Create GroupClasses table
+CREATE TABLE GroupClasses (
+    ClassID SERIAL PRIMARY KEY,
+    ClassName VARCHAR(255),
+    TrainerID INTEGER REFERENCES Trainer(TrainerID),
+    Schedule TEXT,
+    Location VARCHAR(255),
+    Capacity INTEGER,
+    UNIQUE (ClassName, TrainerID)
+);
+
+-- Create PersonalTraining table
+CREATE TABLE PersonalTraining (
+    SessionID SERIAL PRIMARY KEY,
+    MemberID INTEGER REFERENCES Member(MemberID),
+    TrainerID INTEGER REFERENCES Trainer(TrainerID),
+    Date DATE,
+    Time TIME,
+    Status VARCHAR(50),
+    ProgressNotes TEXT
+);
+
+-- Create MembersClasses table
+CREATE TABLE MembersClasses (
+    MemberID INTEGER REFERENCES Member(MemberID),
+    ClassID INTEGER REFERENCES GroupClasses(ClassID),
+    Attendance VARCHAR(50),
+    PRIMARY KEY (MemberID, ClassID)
+);
+
+
+-- Create TrainersSchedule table
+CREATE TABLE TrainersSchedule (
+    SessionID SERIAL PRIMARY KEY,
+    TrainerID INTEGER REFERENCES Trainer(TrainerID),
+	Availability VARCHAR(255)
+);
+
+-- Create Administrative table
+CREATE TABLE Admin (
+    AdminID SERIAL PRIMARY KEY,
+    FirstName VARCHAR(255),
+	LastName VARCHAR(255),
+    AdminAccess VARCHAR(50)
+);
+
+-- Create RoomBookings table
+CREATE TABLE RoomBookings (
+    RoomBookingID SERIAL PRIMARY KEY,
+    AdminID INTEGER REFERENCES Admin(AdminID),
+    RoomName VARCHAR(255),
+    BookingDate DATE,
+    StartTime TIME,
+    EndTime TIME
+);
+
+-- Create Payments table
+CREATE TABLE Payments (
+    PaymentID SERIAL PRIMARY KEY,
+    MemberID INTEGER REFERENCES Member(MemberID),
+    Amount NUMERIC,
+    Date DATE,
+    PaymentMethod VARCHAR(50)
+);
